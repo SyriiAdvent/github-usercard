@@ -76,10 +76,15 @@ function cardMaker(prop) {
   const following = document.createElement("p");
   const bio = document.createElement("p");
 
+  // Contribution Card Element
+  const contribution = document.createElement('div')
+  
   card.classList.add('card');
   infoContainer.classList.add('card-info');
   realName.classList.add('name');
   userName.classList.add('username');
+  // contribution class
+  contribution.classList.add('calendar');
 
   profileImg.src = prop.avatar_url;
   realName.textContent = prop.name;
@@ -90,8 +95,9 @@ function cardMaker(prop) {
   profileLink.textContent = prop.html_url;
   followers.textContent = `Followers: ${prop.followers}`;
   following.textContent = `Following: ${prop.following}`;
-
   bio.textContent = `If i had a bio it would be here. ${prop.blog}`;
+
+  GitHubCalendar(contribution, prop.login, { responsive: true });
 
   cards.appendChild(card);
   card.appendChild(profileImg);
@@ -104,6 +110,7 @@ function cardMaker(prop) {
   infoContainer.appendChild(followers);
   infoContainer.appendChild(following);
   infoContainer.appendChild(bio);
+  card.appendChild(contribution);
 
   function noDataHelper() {
     if(prop.location === undefined) {
