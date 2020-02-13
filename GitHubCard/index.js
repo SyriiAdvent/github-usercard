@@ -1,7 +1,19 @@
+// const axios = require("axios").default;
 /* Step 1: using axios, send a GET request to the following URL 
            (replacing the palceholder with your Github name):
            https://api.github.com/users/<your name>
 */
+const userData = [];
+// const gitHandle = axios
+//   .get("https://api.github.com/users/SyriiAdvent")
+//   .then(res => {
+//     // console.log(res.data);
+//     return res.data;
+//   })
+//   .catch(error => {
+//     // handle error
+//     console.log(error);
+//   });
 
 /* Step 2: Inspect and study the data coming back, this is YOUR 
    github info! You will need to understand the structure of this 
@@ -28,7 +40,34 @@ const followersArray = [];
 
 /* Step 3: Create a function that accepts a single object as its only argument,
           Using DOM methods and properties, create a component that will return the following DOM element:
+*/
+const body = document.querySelector("body");
+const cards = document.querySelector(".cards");
+console.log(cards);
 
+function cardMaker(prop) {
+  const card = document.createElement("div"); // Card Container
+  const profileImg = document.createElement("img"); // users picture
+  const infoContainer = document.createElement("div"); // new child container < ---- !!!! ----- >
+  const realName = document.createElement("h3");
+  const userName = document.createElement("p");
+  const location = document.createElement("p");
+  const profileLink = document.createElement("p"); // profile: <a>link</a>
+  const followers = document.createElement("p");
+  const following = document.createElement("p");
+  const bio = document.createElement("p");
+
+  // profileImg.src = prop.avatar_url;
+  realName.textContent = prop.name;
+
+  cards.appendChild(card);
+  card.appendChild(profileImg);
+  card.appendChild(infoContainer);
+  infoContainer.appendChild(realName);
+}
+getGitUser();
+cardMaker(getGitUser);
+/*
 <div class="card">
   <img src={image url of user} />
   <div class="card-info">
@@ -53,3 +92,15 @@ const followersArray = [];
   luishrd
   bigknell
 */
+function getGitUser() {
+  axios
+    .get("https://api.github.com/users/SyriiAdvent")
+    .then(res => {
+      console.log(res.data);
+      return res.data;
+    })
+    .catch(error => {
+      // handle error
+      console.log(error);
+    });
+}
