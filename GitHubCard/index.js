@@ -3,17 +3,18 @@
            (replacing the palceholder with your Github name):
            https://api.github.com/users/<your name>
 */
-const userData = [];
-// const gitHandle = axios
-//   .get("https://api.github.com/users/SyriiAdvent")
-//   .then(res => {
-//     // console.log(res.data);
-//     return res.data;
-//   })
-//   .catch(error => {
-//     // handle error
-//     console.log(error);
-//   });
+const cards = document.querySelector(".cards");
+
+axios
+  .get("https://api.github.com/users/SyriiAdvent")
+  .then(res => {
+    console.log(res.data);
+    cardMaker(res.data);
+  })
+  .catch(error => {
+    // handle error
+    console.error(error);
+  });
 
 /* Step 2: Inspect and study the data coming back, this is YOUR 
    github info! You will need to understand the structure of this 
@@ -41,9 +42,7 @@ const followersArray = [];
 /* Step 3: Create a function that accepts a single object as its only argument,
           Using DOM methods and properties, create a component that will return the following DOM element:
 */
-const body = document.querySelector("body");
-const cards = document.querySelector(".cards");
-console.log(cards);
+// console.log(cards);
 
 function cardMaker(prop) {
   const card = document.createElement("div"); // Card Container
@@ -52,21 +51,41 @@ function cardMaker(prop) {
   const realName = document.createElement("h3");
   const userName = document.createElement("p");
   const location = document.createElement("p");
-  const profileLink = document.createElement("p"); // profile: <a>link</a>
+  const profile = document.createElement("p"); // profile: <a>link</a>
+  const profileLink = document.createElement("a"); // profile: <a>link</a>
   const followers = document.createElement("p");
   const following = document.createElement("p");
   const bio = document.createElement("p");
 
-  // profileImg.src = prop.avatar_url;
+  card.classList.add('card');
+  infoContainer.classList.add('card-info');
+  realName.classList.add('name');
+  userName.classList.add('username');
+
+  profileImg.src = prop.avatar_url;
   realName.textContent = prop.name;
+  userName.textContent = prop.login;
+  location.textContent = `location: ${prop.location}`;
+  profile.textContent = `profile: ${profileLink}`;
+  profileLink.setAttribute('href', `${prop.html_url}`);
+  profileLink.textContent = prop.html_url;
+  followers.textContent = `Followers: ${prop.followers}`;
+  following.textContent = `Following: ${prop.following}`;
+  bio.textContent = `If i had a bio it would be here. ${prop.blog}`;
 
   cards.appendChild(card);
   card.appendChild(profileImg);
   card.appendChild(infoContainer);
   infoContainer.appendChild(realName);
+  infoContainer.appendChild(userName);
+  infoContainer.appendChild(location);
+  infoContainer.appendChild(profile);
+  profile.appendChild(profileLink);
+  infoContainer.appendChild(followers);
+  infoContainer.appendChild(following);
+  infoContainer.appendChild(bio);
 }
-getGitUser();
-cardMaker(getGitUser);
+
 /*
 <div class="card">
   <img src={image url of user} />
@@ -92,15 +111,3 @@ cardMaker(getGitUser);
   luishrd
   bigknell
 */
-function getGitUser() {
-  axios
-    .get("https://api.github.com/users/SyriiAdvent")
-    .then(res => {
-      console.log(res.data);
-      return res.data;
-    })
-    .catch(error => {
-      // handle error
-      console.log(error);
-    });
-}
