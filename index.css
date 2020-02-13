@@ -93,12 +93,20 @@ body {
 
 .card {
   width: 100%;
+  max-width: 100%;
   padding: 20px;
   display: flex;
   border-radius: 5px;
   box-shadow: 0 1px 6px -2px #000;
   background-color: #FFF;
   margin-bottom: 30px;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.card .card-info {
+  /* width: 90%; */
+  flex-grow: 1;
 }
 
 .card img {
@@ -123,5 +131,8 @@ body {
   margin: 3px 0 10px;
 }
 
+.card .calendar {
+  width: 100%;
+}
 
 
