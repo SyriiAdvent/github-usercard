@@ -37,17 +37,7 @@ axios
           user, and adding that card to the DOM.
 */
 const followersArray = [];
-
-// axios
-// .get('https://api.github.com/users/SyriiAdvent/followers')
-// .then(res => {
-//   // console.log(res.data)
-//   res.data.forEach(ele => {
-//     followersArray.push(ele);
-//   })
-//   // console.log(followersArray);
-// })
-// .catch(err => console.error(err))
+// followersArray.push(axios.get(''))
 
 const followerCards = () => {
   axios
@@ -55,9 +45,13 @@ const followerCards = () => {
   .then(res => {
     // console.log(res.data)
     res.data.forEach(ele => {
-      cardMaker(ele);
+      // cardMaker(ele);
+      followersArray.push(axios
+        .get(ele.url)
+        .then(res => {
+          cardMaker(res.data);
+        }))
     })
-    // console.log(followersArray);
   })
   .catch(err => console.error(err))
 }
@@ -96,6 +90,7 @@ function cardMaker(prop) {
   profileLink.textContent = prop.html_url;
   followers.textContent = `Followers: ${prop.followers}`;
   following.textContent = `Following: ${prop.following}`;
+
   bio.textContent = `If i had a bio it would be here. ${prop.blog}`;
 
   cards.appendChild(card);
@@ -109,6 +104,21 @@ function cardMaker(prop) {
   infoContainer.appendChild(followers);
   infoContainer.appendChild(following);
   infoContainer.appendChild(bio);
+
+  function noDataHelper() {
+    if(prop.location === undefined) {
+      location.textContent = '';
+    }
+    if(prop.followers === undefined && prop.following === undefined) {
+      followers.textContent = '';
+      following.textContent = '';
+    }
+    if(prop.blog === undefined || prop.blog === '') {
+      bio.textContent = `If i had a bio it would be here.`;
+    } else {
+      bio.textContent = prop.blog;
+    }
+  }
 }
 
 /*
