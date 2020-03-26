@@ -95,7 +95,9 @@ function cardMaker(prop) {
   profileLink.textContent = prop.html_url;
   followers.textContent = `Followers: ${prop.followers}`;
   following.textContent = `Following: ${prop.following}`;
-  bio.textContent = `If i had a bio it would be here. ${prop.blog}`;
+  // bio.textContent = `If i had a bio it would be here. ${prop.blog}`;
+  noDataHelper();
+  
 
   GitHubCalendar(contribution, prop.login, { responsive: true });
 
@@ -113,8 +115,10 @@ function cardMaker(prop) {
   card.appendChild(contribution);
 
   function noDataHelper() {
-    if(prop.location === undefined) {
+    if(prop.location === undefined || prop.location === null) {
       location.textContent = '';
+    } else {
+      location.textContent = `location: ${prop.location}`;
     }
     if(prop.followers === undefined && prop.following === undefined) {
       followers.textContent = '';
